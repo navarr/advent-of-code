@@ -9,7 +9,7 @@ function is_nice($string)
     }
     $matchCountMap     = [
         '/([a-z]{2}).*\1/' => 1,
-        '/([a-z])[a-z]{1}\1/i' => 1,
+        '/([a-z])[a-z]\1/i' => 1,
     ];
     $cantMatchCountMap = [
     ];

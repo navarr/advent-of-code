@@ -7,11 +7,11 @@ $commands = file('input.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 $circuit = new \Advent\Circuit();
 
-// -- MODIFICATION FROM part1.php
-$circuit->writeSignal('b', 956);
-// -- END MODIFICATION FROM part1.php
-
 foreach ($commands as $commandString) {
+    // Part 2 - Override b!
+    if ($commandString == '14146 -> b') {
+        $commandString = '956 -> b';
+    }
     $tokens    = explode(' ', $commandString);
     $command   = '';
     $operators = [];

@@ -29,7 +29,6 @@ foreach ($commands as $commandString) {
                 $circuit->writeSignal($writeTo, $tokens[0]);
             } else {
                 $circuit->getOrWaitSignal($tokens[0], function ($code, $value) use ($writeTo, &$circuit) {
-                    echo 'STORE Called', PHP_EOL;
                     $circuit->writeSignal($writeTo, $value);
                 });
             }
@@ -39,7 +38,6 @@ foreach ($commands as $commandString) {
                 $circuit->writeSignal($writeTo, gate_not($tokens[1]));
             } else {
                 $circuit->getOrWaitSignal($tokens[1], function ($code, $value) use ($writeTo, &$circuit) {
-                    echo 'NOT Called', PHP_EOL;
                     $circuit->writeSignal($writeTo, gate_not($value));
                 });
             }
@@ -59,7 +57,6 @@ foreach ($commands as $commandString) {
                     $circuit,
                     [$tokens[0], $tokens[2]],
                     function () use (&$circuit, $writeTo, $a, $b) {
-                        echo 'MULTI AND Called', PHP_EOL;
                         $a = $circuit->getSignal($a);
                         $b = $circuit->getSignal($b);
                         $circuit->writeSignal($writeTo, gate_and($a, $b));
@@ -75,7 +72,6 @@ foreach ($commands as $commandString) {
                 }
 
                 $circuit->getOrWaitSignal($waitOn, function ($code, $value) use ($writeTo, &$circuit, $number) {
-                    echo 'SINGLE AND Called', PHP_EOL;
                     $circuit->writeSignal($writeTo, gate_and($number, $value));
                 });
             } else {
@@ -97,7 +93,6 @@ foreach ($commands as $commandString) {
                     $circuit,
                     [$tokens[0], $tokens[2]],
                     function () use (&$circuit, $writeTo, $a, $b) {
-                        echo 'MULTI AND Called', PHP_EOL;
                         $a = $circuit->getSignal($a);
                         $b = $circuit->getSignal($b);
                         $circuit->writeSignal($writeTo, gate_or($a, $b));
@@ -113,7 +108,6 @@ foreach ($commands as $commandString) {
                 }
 
                 $circuit->getOrWaitSignal($waitOn, function ($code, $value) use ($writeTo, &$circuit, $number) {
-                    echo 'SINGLE AND Called', PHP_EOL;
                     $circuit->writeSignal($writeTo, gate_or($number, $value));
                 });
             } else {

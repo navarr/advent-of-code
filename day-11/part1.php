@@ -15,6 +15,14 @@ function generate_next_password($current)
     $valid = false;
     do {
         // do increment, overflow
+        for($i = 0,$l = count($ascii);$i < $l;++$i) {
+            if (in_array(chr($ascii[$i]), ['i','l','o'])) {
+                $ascii[$i]++;
+                for($j = $i+1;$j < $l;++$j) {
+                    $ascii[$j] = 97;
+                }
+            }
+        }
         $i = count($ascii) - 1;
         while (true) {
 
@@ -58,17 +66,6 @@ function generate_next_password($current)
             continue;
         } // next increment
 
-        // may not contain i/o/l
-        if (strpos($next, 'i') !== false) {
-            continue;
-        }
-        if (strpos($next, 'l') !== false) {
-            continue;
-        }
-        if (strpos($next, 'o') !== false) {
-            continue;
-        }
-
         if (preg_match_all('/([a-z])\1/', $next, $matches) < 2) {
             continue;
         }
@@ -81,6 +78,6 @@ function generate_next_password($current)
 
 $input = trim(file_get_contents('input.txt'));
 
-$next = generate_next_password('ghijklmn');
+$next = generate_next_password($input);
 
 echo $next, PHP_EOL;

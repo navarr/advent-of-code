@@ -19,6 +19,10 @@ function generate_next_password($current)
         while (true) {
 
             ++$ascii[$i];
+            if (in_array(chr($ascii[$i]), ['i','l','o'])) {
+                // skip bad letters
+                ++$ascii[$i];
+            }
             if ($ascii[$i] <= 122) {
                 break;
             }

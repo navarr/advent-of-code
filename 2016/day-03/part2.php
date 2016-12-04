@@ -1,35 +1,43 @@
 <?php
 
-$triangles = file('input.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$lines = file('input.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+// Convert lines and columns to a reasonable structure
+foreach ($lines as $index => $line) {
+    $columns = explode(' ', $line);
+    $columns = array_filter(
+        $columns,
+        function ($column) {
+            if (empty(trim($column))) {
+                return false;
+            }
+            return true;
+        }
+    );
+    $columns = array_map(
+        function ($column) {
+            return intval($column, 10);
+        },
+        $columns
+    );
+    $lines[$index] = array_values($columns);
+}
+
+$triangles = [];
+for ($i = 0, $l = count($lines) / 3; $i < $l; ++$i) {
+    $start = 3*$i;
+    for ($j = 0; $j < 3; ++$j) {
+        $triangles[] = [$lines[$start][$j], $lines[$start+1][$j], $lines[$start+2][$j]];
+    }
+}
 
 $total = count($triangles);
 $possible = 0;
 $impossible = 0;
-foreach ($triangles as $triangle) {
-    // Get the triangle parts - but some funky formatting to align the doc :(
-    $pieces = explode(' ', $triangle);
 
-    // Filter out the funky parts from the file
-    $pieces = array_filter(
-        $pieces,
-        function ($piece) {
-            if (empty(trim($piece))) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-    );
+foreach ($triangles as $pieces) {
 
-    $pieces = array_map(function($piece) { return intval($piece, 10); }, $pieces);
-
-    // Sort Numerically
-    sort($pieces, SORT_NUMERIC);
-
-    // Re-key the array
-    $pieces = array_values($pieces);
-
-    switch(false) {
+    switch (false) {
         default:
             ++$possible;
             break;

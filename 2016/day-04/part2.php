@@ -34,7 +34,16 @@ function lettersByAmount($string)
     );
 }
 
-$sectorSum = 0;
+// http://php.net/manual/en/function.str-rot13.php#107475
+function str_rot($s, $n = 13) {
+    static $letters = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+    $n = (int)$n % 26;
+    if (!$n) return $s;
+    if ($n < 0) $n += 26;
+    if ($n == 13) return str_rot13($s);
+    $rep = substr($letters, $n * 2) . substr($letters, 0, $n * 2);
+    return strtr($s, $letters, $rep);
+}
 
 foreach ($rooms as $room) {
     $pieces = explode('-', $room);
@@ -42,16 +51,18 @@ foreach ($rooms as $room) {
     $pieces2 = explode('[', $piece2);
 
     $roomData = [
-        'name'     => implode('', $pieces),
-        'sector'   => $pieces2[0],
-        'checksum' => substr($pieces2[1], 0, -1),
+        'name'      => implode('-', $pieces),
+        'checkName' => implode('', $pieces),
+        'sector'    => $pieces2[0],
+        'checksum'  => substr($pieces2[1], 0, -1),
     ];
 
-    $validCheck = substr(implode('', lettersByAmount($roomData['name'])), 0, strlen($roomData['checksum']));
+    $validCheck = substr(implode('', lettersByAmount($roomData['checkName'])), 0, strlen($roomData['checksum']));
 
     if ($validCheck == $roomData['checksum']) {
-        $sectorSum += $roomData['sector'];
+        $roomData['name'] = str_rot($roomData['name'], $roomData['sector']);
+        if ($roomData['name'] == 'northpole-object-storage') {
+            echo 'North Pole Object Storage, Sector '.$roomData['sector'],PHP_EOL;
+        }
     }
 }
-
-echo $sectorSum,PHP_EOL;

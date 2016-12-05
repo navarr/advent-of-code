@@ -2,17 +2,24 @@
 
 $input = 'reyedfim';
 
-$password = '';
+$password = str_repeat('_', 8);
 
 $numericIndex = 0;
-while (strlen($password) < 8) {
+$found = 0;
+$numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+while ($found < 8) {
     $md5 = md5($input.$numericIndex);
     $substr = substr($md5, 0, 5);
     $search = str_repeat('0', 5);
-    // $substr == $search ALWAYS EQUALS TRUE WTF, guessing b/c the md5 is returning 0e and the $search is 0 so PHP goes "oh, they're numbers!  Both 0!"
-    if (strcmp($substr, $search) == 0) {
-        $password .= substr($md5, 5, 1);
-        echo implode(', ', [$input, $numericIndex, $substr, $search, $md5, $password]), PHP_EOL;
+    if (strcmp($substr, $search) == 0 && in_array(substr($md5, 5, 1), $numbers)) {
+        $position = substr($md5, 5, 1);
+        $position = intval($position, 10);
+        $character = substr($md5, 6, 1);
+        if ($position < 8 && $password{$position} == '_') {
+            $password{$position} = $character;
+            ++$found;
+        }
+        echo implode(', ', [$input, $numericIndex, $position, $character, $md5, $password]), PHP_EOL;
     }
     ++$numericIndex;
 }

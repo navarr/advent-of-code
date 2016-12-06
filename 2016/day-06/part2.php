@@ -18,7 +18,7 @@ foreach ($input as $line) {
 $message = '';
 foreach ($repetitions as $repetition) {
     usort($repetition, function ($a, $b) {
-        return $b['count'] <=> $a['count'];
+        return $a['count'] <=> $b['count'];
     });
 
     reset($repetition);

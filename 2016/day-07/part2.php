@@ -2,26 +2,32 @@
 
 $input = file('input.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-function abba_exists($input)
+function get_abas($input)
 {
+    $abas = [];
     $string = str_split($input);
-    for ($i = 0, $l = count($string) - 3; $i < $l; ++$i) {
+    for ($i = 0, $l = count($string) - 2; $i < $l; ++$i) {
         switch (true) {
             case ($string[$i] == $string[$i + 1]):
-            case ($string[$i + 1] != $string[$i + 2]):
-            case ($string[$i] != $string[$i + 3]):
+            case ($string[$i] != $string[$i + 2]):
                 continue;
             default:
-                return true;
+                $abas[] = implode('', [$string[$i], $string[$i+1], $string[$i+2]]);
         }
     }
-    return false;
+    return $abas;
 }
 
-global $last_has_tls_error;
-function has_tls($line)
+function aba_to_bab($input)
 {
-    global $last_has_tls_error;
+    $string = str_split($input);
+    return implode('', [$string[1], $string[0], $string[1]]);
+}
+
+global $last_has_ssl_error;
+function has_ssl($line)
+{
+    global $last_has_ssl_error;
     $ipParts = [];
     $hypernetParts = [];
 
@@ -41,47 +47,48 @@ function has_tls($line)
     };
     $ipParts[] = $line;
 
-    $ipAbba = false;
+    $ip_abas = [];
     foreach ($ipParts as $ipPart) {
-        if (abba_exists($ipPart)) {
-            $ipAbba = true;
-            break;
-        }
+        $ip_abas = array_merge($ip_abas, get_abas($ipPart));
     }
 
-    if (!$ipAbba) {
-        $last_has_tls_error = 'No IP ABBA';
+    if (empty($ip_abas)) {
+        $last_has_ssl_error = 'No IP ABAs';
         return false;
     }
 
-    $hypernetAbba = false;
+    $ip_babs = array_map('aba_to_bab', $ip_abas);
+
+    $hypernet_abas = [];
     foreach ($hypernetParts as $hypernetPart) {
-        if (abba_exists($hypernetPart)) {
-            $hypernetAbba = true;
-            break;
-        }
+        $hypernet_abas = array_merge($hypernet_abas, get_abas($hypernetPart));
     }
 
-    if ($hypernetAbba) {
-        $last_has_tls_error = 'Has Hypernet ABBA';
+    if (empty($hypernet_abas)) {
+        $last_has_ssl_error = 'No Hypernet BABs';
         return false;
     }
 
+    $uniques = array_intersect($ip_babs, $hypernet_abas);
+    if (!count($uniques)) {
+        $last_has_ssl_error = 'No Hypernet BABs corresponding to an IP ABA';
+        return false;
+    }
     return true;
 }
 
-$ipsWithTLS = 0;
+$ipsWithSSL = 0;
 
 // ASSERTIONS
-assert(has_tls('abba[mnop]qrst')) or die('Assertion 1 Failed');
-assert(!has_tls('abcd[bddb]xyyx')) or die ('Assertion 2 Failed');
-assert(!has_tls('aaaa[qwer]tyui')) or die ('Assertion 3 Failed');
-assert(has_tls('ioxxoj[asdfgh]zxcvbn')) or die('Assertion 4 Failed');
+assert(has_ssl('aba[bab]xyz')) or die('Assertion 1 Failed');
+assert(!has_ssl('xyx[xyx]xyx')) or die('Assertion 2 Failed');
+assert(has_ssl('aaa[kek]eke')) or die('Assertion 3 Failed');
+assert(has_ssl('zazbz[bzb]cdb')) or die('Assertion 4 Failed');
 
 foreach ($input as $line) {
-    if (has_tls($line)) {
-        ++$ipsWithTLS;
+    if (has_ssl($line)) {
+        ++$ipsWithSSL;
     }
 }
 
-echo $ipsWithTLS,' IP Addresses have TLS',PHP_EOL;
+echo $ipsWithSSL,' IP Addresses have TLS',PHP_EOL;

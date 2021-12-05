@@ -10,7 +10,7 @@ $marks = array_map(
     static function ($mark) {
         return (int)$mark;
     },
-    explode(',',next($input));
+    explode(',',next($input))
 }
 
 // Now, we're processing this file without empty lines - which means there are no spaces between boards

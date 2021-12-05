@@ -22,6 +22,8 @@ do { // Similar to foreach but this is the block that contains 1 board
     for($row = 0;$row < 5;++$row) {
         $currentInput = next($input);
         if ($currentInput === false) {
+            var_dump($boards);
+            
             echo "NEXT FAILED",PHP_EOL;
             $line = (5*($i-1))+$row;
             $realLine = $line + $i + 2;

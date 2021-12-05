@@ -20,8 +20,8 @@ do { // Similar to foreach but this is the block that contains 1 board
             static function (string $input) {
                 return (int)trim($input);
             },
-            str_split(current($input), 3);
-        )
+            str_split(current($input), 3)
+        );
         next($input);
     }
     var_dump($board);

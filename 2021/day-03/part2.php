@@ -14,6 +14,7 @@ function calculatePlaceBit(array $input, int $place): bool
         static function (array $carry, string $number) use ($place): array {
             $bit = (int)$number[$place];
             $carry[$bit] = 0;
+            return $carry;
         },
         [0 => 0, 1 => 0]
     );

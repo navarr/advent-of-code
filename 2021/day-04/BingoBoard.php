@@ -24,7 +24,7 @@ class BingoBoard
      */
     public function mark(int $number): void
     {
-        $marks[] = $number;
+        $this->marks[] = $number;
     }
 
     public function hasWon(): bool

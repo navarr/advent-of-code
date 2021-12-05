@@ -93,7 +93,7 @@ $answer = calculate([
     '01010',
 ]);
 
-assert($answer === 230);
+assert('$answer === 230', 'Code is incorrect');
 
 echo "---[ Real Data ]",PHP_EOL;
 calculate($input);

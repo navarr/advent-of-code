@@ -7,14 +7,16 @@ class BingoBoard
     private const ROW_COUNT = 5;
     private const COLUMN_COUNT = 5;
 
-    private readonly array $marks = [];
+    private readonly array $marks;
 
     /**
      * @param $board array[] First index is row, second index is column
      */
     public function __construct(
         private readonly array $board
-    ) {}
+    ) {
+        $this->marks = []; // Can't have a default value????
+    }
 
     /**
      * @param int $number The number being called out

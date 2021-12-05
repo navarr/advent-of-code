@@ -43,7 +43,7 @@ for($place = 0;$place < $length;$place++) {
         $oxygenRating = bindec(reset($oxygenCandidates));
         break;
     }
-    $number = calculatePlaceBit($oxygenCandidates, $i) ? '1' : '0';
+    $number = calculatePlaceBit($oxygenCandidates, $place) ? '1' : '0';
     $oxygenCandidates = array_filter(
         $oxygenCandidates,
         static function ($candidate) use ($place, $number) {

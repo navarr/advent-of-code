@@ -1,0 +1,21 @@
+name: 2021-03
+
+jobs:
+  run:
+    name: Answer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shvammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          tools: composer:v2
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: CHDIR Day 3
+        run: cd 2021/day-03
+
+      - name: Run Code
+        run: php part1.php

@@ -7,9 +7,9 @@ $input = file(__DIR__ . '/input.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LI
 $amounts = [];
 
 foreach($input as $line) {
-    $length =strlen($line);
+    $length = strlen($line);
     for($i = 0;$i < $length;++$i) {
-        $bit = $length[$i];
+        $bit = $line[$i];
         if (!isset($amounts[$i][$bit])) {
             $amounts[$i][$bit] = 0;
         }

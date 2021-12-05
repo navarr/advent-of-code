@@ -16,4 +16,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run Code
-        run: php 2021/day-03/part2.php
+        run: php 2021/day-04/part2.php

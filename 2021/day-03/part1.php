@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$input = file('input.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$input = file(__DIR__ . '/input.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 $amounts = [];
 
@@ -27,7 +27,10 @@ foreach($amounts as $place => $data) {
     $epsilonRate .= $epsilonBit;
 }
 
-echo "Gamma: ",$gammaRate,PHP_EOL;
-echo "Epsilon: ",$epsilonRate,PHP_EOL;
+$gamma = bindec($gammaRate);
+$epsilon = bindec($epsilonRate);
 
-echo "Answer: ",$gammaRate*$epsilonRate,PHP_EOL;
+echo "Gamma: ",$gamma,PHP_EOL;
+echo "Epsilon: ",$epsilon,PHP_EOL;
+
+echo "Answer: ",$gamma*$epsilon,PHP_EOL;

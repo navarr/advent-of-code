@@ -11,7 +11,7 @@ $marks = array_map(
         return (int)$mark;
     },
     explode(',',next($input))
-}
+);
 
 // Now, we're processing this file without empty lines - which means there are no spaces between boards
 // So we don't need to process those empty lines.  Each board is 5x5, so after 5, its a new board

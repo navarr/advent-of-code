@@ -38,7 +38,7 @@ $length = strlen($input[0]);
 
 echo "String Length is {$length}",PHP_EOL;
 
-for($place = 0;$place < $length;++$place) {
+for($place = 0;$place < $length;$place++) {
     if (count($oxygenCandidates) === 1) {
         $oxygenRating = bindec(reset($oxygenCandidates));
         break;

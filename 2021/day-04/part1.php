@@ -23,11 +23,13 @@ do { // Similar to foreach but this is the block that contains 1 board
         $currentInput = next($input);
         if ($currentInput === false) {
             echo "NEXT FAILED",PHP_EOL;
-            $line = 1+(5*($i-1))+$row;
-            echo "LINE #: ",$line,PHP_EOL;
-            echo "  ",$input[$line-1],PHP_EOL;
-            echo "->",$input[$line],PHP_EOL;
-            echo "  ",$input[$line+1],PHP_EOL;
+            $line = (5*($i-1))+$row;
+            $realLine = $line + $i + 2;
+            echo "LINE #: ",$realLine,PHP_EOL;
+            echo "    ",$input[$line-2],PHP_EOL;
+            echo "--> ",$input[$line-1],PHP_EOL;
+            echo "    ",$input[$line],PHP_EOL;
+            exit;
         }
         $split = str_split($currentInput, 3);
         $boardData[] = array_map(

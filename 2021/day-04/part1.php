@@ -18,6 +18,7 @@ $i = 1;
 do { // Similar to foreach but this is the block that contains 1 board
 
     echo "Building board #{$i}...",PHP_EOL;
+    ++$i;
 
     $boardData = [];
     for($row = 0;$row < 5;++$row) {

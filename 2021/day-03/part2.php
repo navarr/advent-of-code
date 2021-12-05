@@ -34,9 +34,7 @@ foreach($input as $line) {
 
 $oxygenCandidates = $input;
 $oxygenRating='';
-$length = strlen($line[0]);
-
-echo "String length: {$length}",PHP_EOL;
+$length = strlen($input[0]);
 
 for($place = 0;$place < $length;++$place) {
     if (count($oxygenCandidates) === 1) {

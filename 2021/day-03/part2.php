@@ -32,13 +32,15 @@ foreach($input as $line) {
     }
 }
 
-$oxygenCandidates = $input;
-$oxygenRating='';
+$oxygenCandidates = $co2Candidates = $input;
+$oxygenRating = $co2Rating = '';
 $length = strlen($input[0]);
+
+echo "String Length is {$length}",PHP_EOL;
 
 for($place = 0;$place < $length;++$place) {
     if (count($oxygenCandidates) === 1) {
-        $oxygenRating = reset($oxygenCandidates);
+        $oxygenRating = bindec(reset($oxygenCandidates));
         break;
     }
     $number = calculatePlaceBit($oxygenCandidates, $i) ? '1' : '0';
@@ -50,8 +52,21 @@ for($place = 0;$place < $length;++$place) {
     );
 }
 
-if ($oxygenRating === '') {
-    echo "Oxygen Rating not found.  Re-evaluate code.",PHP_EOL;
-} else {
-    echo "Oxygen Rating: ",bindec($oxygenRating),PHP_EOL;
+for($place = 0;$place < $length;++$place) {
+    if (count($co2Candidates) === 1) {
+        $co2Rating = bindec(reset($co2Candidates));
+        break;
+    }
+    $number = calculatePlaceBit($co2Candidates, $i) ? '1' : '0';
+    $co2Candidates = array_filter(
+        $co2Candidates,
+        static function ($candidate) use ($place, $number) {
+            return $candidate[$place] === $number;
+        }
+    );
 }
+
+echo "Oxygen Rating: {$oxygenRating}",PHP_EOL;
+echo "CO2 Rating: {$co2Rating}",PHP_EOL;
+
+echo "Answer: ",$oxygenRating*$co2Rating,PHP_EOL;

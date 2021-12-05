@@ -48,6 +48,7 @@ foreach ($marks as $mark) {
         $score = $board->getScore();
         if ($score > 0) {
             echo "Win!  Score: {$score}",PHP_EOL;
+            break 2;
         }
     }
 }

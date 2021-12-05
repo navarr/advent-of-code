@@ -13,7 +13,8 @@ class BingoBoard
      * @param $board array[] First index is row, second index is column
      */
     public function __construct(
-        private readonly array $board
+        private readonly array $board,
+        private readonly bool $allowDiagonals = false
     ) {}
 
     /**
@@ -41,12 +42,14 @@ class BingoBoard
             }
         }
 
-        // Check Diagonals
-        if ($this->checkLeftDiagonalForWin()) {
-            return true;
-        }
-        if ($this->checkRightDiagonalForWin()) {
-            return true;
+        if ($this->allowDiagonals) {
+            // Check Diagonals
+            if ($this->checkLeftDiagonalForWin()) {
+                return true;
+            }
+            if ($this->checkRightDiagonalForWin()) {
+                return true;
+            }
         }
         return false;
     }

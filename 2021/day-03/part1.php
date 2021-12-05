@@ -18,10 +18,16 @@ foreach($input as $line) {
 }
 
 $gammaRate = '';
+$epsilonRate= '';
 
 foreach($amounts as $place => $data) {
-    $bit = $data[0] > $data[1] ? 0 : 1;
-    $gammaRate .= $bit;
+    $gammaBit = $data[0] > $data[1] ? 0 : 1;
+    $epsilonBit = $data[0] > $data[1] ? 1 : 0;
+    $gammaRate .= $gammaBit;
+    $epsilonRate .= $epsilonBit;
 }
 
-echo bindec($gammaRate);
+echo "Gamma: ",$gammaRate,PHP_EOL;
+echo "Epsilon: ",$epsilonRate,PHP_EOL;
+
+echo "Answer: ",$gammaRate*$epsilonRate,PHP_EOL;

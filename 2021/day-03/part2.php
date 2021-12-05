@@ -12,8 +12,8 @@ function calculatePlaceBit(array $input, int $place): bool
     $result = array_reduce(
         $input,
         static function (array $carry, string $number) use ($place): array {
-            $bit = (int)$number[$place];
-            $carry[$bit] = 0;
+            $bit = $number[$place];
+            $carry[(int)$bit]++;
             return $carry;
         },
         [0 => 0, 1 => 0]
@@ -40,11 +40,7 @@ function calculate(array $input)
 
     echo "String Length is {$length}",PHP_EOL;
 
-    for($place = 0;$place < $length;$place++) {
-        if (count($oxygenCandidates) === 1) {
-            $oxygenRating = bindec(reset($oxygenCandidates));
-            break;
-        }
+    for($place = 0;$place < $length;++$place) {
         $number = calculatePlaceBit($oxygenCandidates, $place) ? '1' : '0';
         $oxygenCandidates = array_filter(
             $oxygenCandidates,
@@ -52,13 +48,13 @@ function calculate(array $input)
                 return $candidate[$place] === $number;
             }
         );
+        if (count($oxygenCandidates) === 1) {
+            $oxygenRating = bindec(reset($oxygenCandidates));
+            break;
+        }
     }
 
     for($place = 0;$place < $length;++$place) {
-        if (count($co2Candidates) === 1) {
-            $co2Rating = bindec(reset($co2Candidates));
-            break;
-        }
         $number = calculatePlaceBit($co2Candidates, $place) ? '0' : '1';
         $co2Candidates = array_filter(
             $co2Candidates,
@@ -66,6 +62,10 @@ function calculate(array $input)
                 return $candidate[$place] === $number;
             }
         );
+        if (count($co2Candidates) === 1) {
+            $co2Rating = bindec(reset($co2Candidates));
+            break;
+        }
     }
 
     echo "Oxygen Rating: {$oxygenRating}",PHP_EOL;
@@ -93,7 +93,7 @@ $answer = calculate([
     '01010',
 ]);
 
-assert('$answer === 230', 'Code is incorrect');
+echo "Answer should be: 23, 10, 230",PHP_EOL;
 
 echo "---[ Real Data ]",PHP_EOL;
 calculate($input);

@@ -35,7 +35,7 @@ $oxygenCandidates = $input;
 $oxygenRating='';
 $length = strlen($line[0]);
 
-for($place = 0;$place < $length;++$place)
+for($place = 0;$place < $length;++$place) {
     if (count($oxygenCandidates) === 1) {
         $oxygenRating = reset($oxygenCandidates);
         break;

@@ -13,10 +13,13 @@ next($input); // Drive input forward to the boards
 // Now, we're processing this file without empty lines - which means there are no spaces between boards
 // So we don't need to process those empty lines.  Each board is 5x5, so after 5, its a new board
 
+/** @var BingoBoard[] $boards */
+$boards = [];
+
 do { // Similar to foreach but this is the block that contains 1 board
-    $board = [];
+    $boardData = [];
     for($row = 0;$row < 5;++$row) {
-        $board[] = array_map(
+        $boardData[] = array_map(
             static function (string $input) {
                 return (int)trim($input);
             },
@@ -24,7 +27,18 @@ do { // Similar to foreach but this is the block that contains 1 board
         );
         next($input);
     }
-    var_dump($board);
-    echo PHP_EOL,PHP_EOL;
-    exit; // debug
-} while(next($input));
+    $boards[] = new BingoBoard($boardData);
+} while (next($input));
+
+Time to play Bingo.
+
+foreach ($marks as $mark) {
+    foreach ($boards as $board) {
+        $board->mark($mark);
+        $score = $board->getScore();
+        if ($score > 0) {
+            echo "Win!  Score: {$score}",PHP_EOL;
+            exit 0;
+        }
+    }
+}

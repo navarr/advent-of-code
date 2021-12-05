@@ -54,4 +54,4 @@ foreach ($marks as $mark) {
     }
 }
 
-echo "Win!  Score: {$score}"
+echo "Win!  Score: {$score}";

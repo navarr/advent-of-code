@@ -22,11 +22,17 @@ do { // Similar to foreach but this is the block that contains 1 board
 
     $boardData = [];
     for($row = 0;$row < 5;++$row) {
+        $currentInput = next($input);
+        $split = str_split($currentInput, 3);
+        if ($split === false) {
+            echo "FAILED TO SPLIT: '",$currentInput,"'",PHP_EOL;
+            exit;
+        }
         $boardData[] = array_map(
             static function (string $input) {
                 return (int)trim($input);
             },
-            str_split(next($input), 3)
+            $split
         );
     }
     $boards[] = new BingoBoard($boardData);

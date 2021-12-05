@@ -45,7 +45,7 @@ do { // Similar to foreach but this is the block that contains 1 board
     $boards[] = new BingoBoard($boardData);
 
     ++$i;
-} while (next($input));
+} while (current($input));
 
 // Time to play Bingo.
 

@@ -16,18 +16,20 @@ $boards = [];
 
 $i = 1;
 do { // Similar to foreach but this is the block that contains 1 board
-
     echo "Building board #{$i}...",PHP_EOL;
-    ++$i;
 
     $boardData = [];
     for($row = 0;$row < 5;++$row) {
         $currentInput = next($input);
-        $split = str_split($currentInput, 3);
-        if ($split === false) {
-            echo "FAILED TO SPLIT: '",$currentInput,"'",PHP_EOL;
-            exit;
+        if ($currentInput === false) {
+            echo "NEXT FAILED",PHP_EOL;
+            $line = 1+(5*($i-1))+$row;
+            echo "LINE #: ",$line,PHP_EOL;
+            echo "  ",$input[$line-1],PHP_EOL;
+            echo "->",$input[$line],PHP_EOL;
+            echo "  ",$input[$line+1],PHP_EOL;
         }
+        $split = str_split($currentInput, 3);
         $boardData[] = array_map(
             static function (string $input) {
                 return (int)trim($input);
@@ -36,6 +38,8 @@ do { // Similar to foreach but this is the block that contains 1 board
         );
     }
     $boards[] = new BingoBoard($boardData);
+
+    ++$i;
 } while (next($input));
 
 // Time to play Bingo.

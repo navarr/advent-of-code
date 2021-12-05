@@ -46,6 +46,9 @@ $latestScore = 0;
 
 foreach ($marks as $mark) {
     foreach ($boards as $board) {
+        if ($board->hasWon()) {
+            continue;
+        }
         $board->mark($mark);
         $score = $board->getScore();
         if ($score > 0) {

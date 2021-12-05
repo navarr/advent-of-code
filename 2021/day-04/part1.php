@@ -52,3 +52,5 @@ foreach ($marks as $mark) {
         }
     }
 }
+
+var_dump($boards);

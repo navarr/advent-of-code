@@ -9,7 +9,7 @@ $amounts = [];
 foreach($input as $line) {
     $length =strlen($line);
     for($i = 0;$i < $length;++$i) {
-        $bit = $length{$i};
+        $bit = $length[$i];
         if (!isset($amounts[$i][$bit])) {
             $amounts[$i][$bit] = 0;
         }

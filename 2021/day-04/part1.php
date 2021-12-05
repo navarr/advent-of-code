@@ -30,7 +30,7 @@ do { // Similar to foreach but this is the block that contains 1 board
     $boards[] = new BingoBoard($boardData);
 } while (next($input));
 
-Time to play Bingo.
+// Time to play Bingo.
 
 foreach ($marks as $mark) {
     foreach ($boards as $board) {

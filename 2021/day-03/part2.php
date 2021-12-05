@@ -57,7 +57,7 @@ for($place = 0;$place < $length;++$place) {
         $co2Rating = bindec(reset($co2Candidates));
         break;
     }
-    $number = calculatePlaceBit($co2Candidates, $place) ? '1' : '0';
+    $number = calculatePlaceBit($co2Candidates, $place) ? '0' : '1';
     $co2Candidates = array_filter(
         $co2Candidates,
         static function ($candidate) use ($place, $number) {
